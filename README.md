@@ -42,3 +42,6 @@ Simple Application To CRUD Employee Information.
 3. Run on the developer local
     `npm start`
 
+### Dockerfile, Docker-compose and deployment should be on Kubernetes
+### Also use Sonarqube
+### Also use Nginx
