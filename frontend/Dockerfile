@@ -5,6 +5,7 @@ FROM node:12.2.0-alpine as builder
 WORKDIR /app
 
 
+
 # install app dependencies
 #copies package.json and package-lock.json to Docker environment
 COPY . /app/
