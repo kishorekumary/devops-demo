@@ -5,10 +5,10 @@
  #set the working Directory
  WORKDIR /usr/src/app
  #copy pom.xml to the working directory
- COPY pom.xml .
+ COPY pom.xml pom.xml
 #copy everything in src folder
  COPY src /usr/src/app/src
- RUN mvn -f /usr/src/app/pom.xml clean package
+ RUN mvn clean package
 
 #Stage-2 
 
