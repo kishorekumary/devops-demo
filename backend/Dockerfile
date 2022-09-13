@@ -1,3 +1,5 @@
+#Stage-1
+
 #Pull the official image
  FROM maven:3.8.6-jdk-11 AS build
  #set the working Directory
