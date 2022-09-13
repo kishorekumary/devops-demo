@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 #Stage-1
 
 #Pull the official image
@@ -26,4 +26,4 @@ FROM openjdk:11
 EXPOSE 9001
 ADD target/springboot-backend-0.0.1-SNAPSHOT.jar webapp.jar 
 ENTRYPOINT [ "java", "-jar", "webapp.jar" ]
->>>>>>> 3f002c6f27fdbf3be54a887c70e688bc8e31bed3
+
