@@ -3,11 +3,11 @@
 #Pull the official image from dockerhub
  FROM maven:3.8.6-jdk-11 AS build
  #set the working Directory
- WORKDIR /usr/src/app
+ WORKDIR /usr/app
  #copy pom.xml to the working directory
  COPY pom.xml pom.xml
 #copy everything in src folder
- COPY src /usr/src/app/src
+ COPY src /usr/app/src
  RUN mvn clean package
 
 #Stage-2 
