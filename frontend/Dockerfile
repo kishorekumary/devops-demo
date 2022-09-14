@@ -1,15 +1,20 @@
+#Stage-1
 
+#Pull official image from Dockerhub
 FROM node:12.2.0-alpine as builder
 # set working directory
 WORKDIR /app
 #Copy the package.json files to install packages
-COPY package*.json .
+COPY package*.json ./
 RUN npm install
 #Copy  everything over to Docker environment
 COPY . .
 #build the code
 RUN npm run build
-#Stage-2 using nginx
+
+#Stage-2
+
+#Pull official image from Dockerhub
 FROM nginx:1.16.0-alpine 
 #Set working directory
 WORKDIR /usr/share/nginx/html
