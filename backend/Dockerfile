@@ -7,7 +7,7 @@
  #copy pom.xml to the working directory
  COPY pom.xml pom.xml
 #copy everything in src folder
- COPY src /usr/app/src
+ COPY src src
  RUN mvn clean package
 
 #Stage-2 
@@ -15,7 +15,7 @@
 #Pull the official image from dockerhub
  FROM openjdk:11
  #Copy the artifact to here from the previous stage
- COPY --from=build /usr/src/app/target/springboot-backend-0.0.1-SNAPSHOT.jar /usr/app/webapp.jar 
+ COPY --from=build /usr/app/target/springboot-backend-0.0.1-SNAPSHOT.jar /usr/app/webapp.jar 
  #Expose 9001 to be able to connect with frontend
  EXPOSE 9001
  #Runs the background
