@@ -1,0 +1,57 @@
+version: "3.4"
+services:
+  frontend:
+     image: frontend
+     build:
+       context: ./frontend
+       dockerfile: Dockerfile
+     container_name: front-end 
+     restart: always
+     expose:
+       - 3000
+     ports:
+       - "3000:80"
+     tty: true
+     networks:
+      - employee
+  backend:
+     image: backend
+     build:
+       context: ./backend
+       dockerfile: Dockerfile
+     container_name: back-end 
+     restart: always
+     depends_on:
+       - mysql-db
+     expose:
+       - 9001
+     ports:
+       - "9001:9001"
+     tty: true
+     networks:
+      - employee
+  mysql-db:
+    image: mysql-db
+    container_name: mysql-db
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    restart: always
+    command: --init-file /data/application/init.sql
+    environment:
+      MYSQL_DATABASE: employee_management_system
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: 'abcd1234'
+    expose:
+      - 3306
+    ports:
+      - "3306:3306"
+    volumes:
+      - emp-db:/var/lib/mysql
+    networks:
+      - employee
+volumes:
+    emp-db:
+networks:
+    employee:
+      driver: "bridge"  
