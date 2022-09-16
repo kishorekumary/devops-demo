@@ -1,16 +1,6 @@
 pipeline {
     agent { label 'proj-4' }
     stages {
-            stage('CHECKOUT THE SOURCE CODE OF emp-project') {
-                steps {
-                    dir('/home/proj-4/emp-project'){
-                        git branch: 'develop', 
-                        credentialsId: 'kishore-gitlab-credentials',
-                        url: 'http://gitlab.zymrinc.com/ZDevOps/devops-proj-4.git'
-                    }
-                }
-            }
-           
             stage('Modify the code to make it work on this VM') {
                 steps {
                     dir('/home/proj-4/emp-project'){
