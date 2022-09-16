@@ -39,8 +39,8 @@ services:
     restart: always
     command: --init-file /data/application/init.sql
     environment:
-      MYSQL_DATABASE: employee_management_system
-      MYSQL_ROOT_USER: root
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_USER: ${MYSQL_ROOT_USER}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     expose:
       - 3306
