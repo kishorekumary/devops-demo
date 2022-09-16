@@ -1,34 +1,31 @@
 pipeline {
     agent { label 'proj-4' }
+    environment {
+        HOST_IP = '20.20.4.34'
+        }
     stages {
-            stage('Modify the code to make it work on this VM') {
+            stage('Update CORS & backend URLs !') {
                 steps {
-                    dir('/home/proj-4/emp-project'){
-                       sh "sed -i 's/localhost/20.20.4.34/g' backend/src/main/java/net/javaguides/springboot/controller/EmployeeController.java"
-                       sh "sed -i 's/localhost/20.20.4.34/g' frontend/src/services/EmployeeService.js"
-                       echo "Done with the Code changes !!"
-                    }
+                  
+                       sh "sed -i 's/localhost/$HOST_IP/g' backend/src/main/java/net/javaguides/springboot/controller/EmployeeController.java"
+                       sh "sed -i 's/localhost/$HOST_IP/g' frontend/src/services/EmployeeService.js"
+                       echo "Updated CORS URL and Backend URL !!"
                 }
             }
                     
             stage('Build the Application') {
                 steps {
-                    dir('/home/proj-4/emp-project'){
                        echo 'Start the docker build'                  
                        sh 'docker-compose build'
                        echo "Build Successful!"
-                    }
                 }
             }
                        
             stage('Start the application') {
                 steps {
-                    dir('/home/proj-4/emp-project'){
-                       echo 'Going Down!'
                        sh 'docker-compose down'
                        sh 'docker-compose up -d'
-                       echo 'Application Started !!!'
-                    }
+                       echo 'Application Started !'
                 }
             }
            
@@ -41,17 +38,13 @@ pipeline {
            
             stage('Push to nexus registry ') {
                 steps {
-                    dir('/home/proj-4/emp-project'){
-                        echo 'Pushing Artifacts to Nexus Registry!'
-                    }
+                       echo 'Pushing Artifacts to Nexus Registry!'
                 }
             }
            
             stage('K8s deployment ') {
                 steps {
-                    dir('/home/proj-4/emp-project'){
                        echo 'Deploying on K8s !!'
-                    }
                 }
             }
         
