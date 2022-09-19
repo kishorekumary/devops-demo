@@ -7,6 +7,8 @@ services:
        dockerfile: Dockerfile
      container_name: front-end 
      restart: always
+     environment:
+       BACKEND_URL: ${BACKEND_URL}
      expose:
        - 3000
      ports:
@@ -20,6 +22,12 @@ services:
        context: ./backend
        dockerfile: Dockerfile
      container_name: back-end 
+     environment:
+       MYSQL_DATABASE: ${MYSQL_DATABASE}
+       MYSQL_ROOT_USER: ${MYSQL_ROOT_USER}
+       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+       CORS_ALLOW_URL: ${CORS_ALLOW_URL}
+       MYSQL_CONNECTION: ${MYSQL_CONNECTION}
      restart: always
      depends_on:
        - mysql-db
@@ -51,11 +59,9 @@ services:
     networks:
       - employee
 volumes:
-    emp-db:
-      external: true
-        
+    emp-db:       
 networks:
     employee:
       driver: "bridge"
-      external: true
+     
         
