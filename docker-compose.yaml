@@ -59,7 +59,7 @@ services:
     networks:
       - employee
 volumes:
-  emp-db:       
+  emp-db:
 networks:
   employee:
     driver: "bridge"
