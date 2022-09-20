@@ -1,15 +1,13 @@
 pipeline {
     agent { label 'proj-4' }
-    environment {
-        HOST_IP = '20.20.4.34'
-        }
+    
     stages {
-            stage('Update CORS & backend URLs !') {
+            stage('Update frontend .env file !') {
                 steps {
-                  
-                       sh "sed -i 's/localhost/$HOST_IP/g' backend/src/main/java/net/javaguides/springboot/controller/EmployeeController.java"
-                       sh "sed -i 's/localhost/$HOST_IP/g' frontend/src/services/EmployeeService.js"
-                       echo "Updated CORS URL and Backend URL !!"
+                       sh 'rm frontend/.env || true'
+                       sh 'touch frontend/.env'
+                       sh """ echo "REACT_API_BACKEND_URL=${params.REACT_API_BACKEND_URL}" >> frontend/.env """
+                       echo "Updated frontend environment file !!"
                 }
             }
                     
