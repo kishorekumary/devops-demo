@@ -6,7 +6,7 @@ pipeline {
                 steps {
                        sh 'rm frontend/.env || true'
                        sh 'touch frontend/.env'
-                       sh """ echo "REACT_API_BACKEND_URL=${params.REACT_API_BACKEND_URL}" >> frontend/.env """
+                       sh """ echo "REACT_APP_BACKEND_URL=${params.REACT_APP_BACKEND_URL}" >> frontend/.env """
                        echo "Updated frontend environment file !!"
                 }
             }
