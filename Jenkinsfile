@@ -19,7 +19,7 @@ pipeline {
                 }
             }
                        
-            stage('Deploy The Latest') {
+            stage('Deploy To Dev') {
                 steps {
                        sh 'docker-compose down'
                        sh 'docker-compose up -d'
