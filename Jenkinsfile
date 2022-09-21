@@ -19,7 +19,7 @@ pipeline {
                 }
             }
                        
-            stage('Start Application') {
+            stage('Deploy The Latest') {
                 steps {
                        sh 'docker-compose down'
                        sh 'docker-compose up -d'
@@ -50,6 +50,7 @@ pipeline {
                         sh 'docker push nexus.zymrinc.com:8083/devops-proj-4/frontend:latest'
                         sh 'docker push nexus.zymrinc.com:8083/devops-proj-4/backend:latest'
                         sh 'docker push nexus.zymrinc.com:8083/devops-proj-4/mysql-db:latest'
+                        echo 'Artifacts Published to Nexus Repo!'
                     }
                 }
             }
