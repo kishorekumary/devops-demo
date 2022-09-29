@@ -2,7 +2,7 @@ pipeline {
     agent { label 'proj-4' }
     
     stages {
-            stage('Pre Build') {
+            stage('Pre Build: Dev') {
                 steps {
                        sh 'rm frontend/.env || true'
                        sh 'touch frontend/.env'
@@ -11,7 +11,7 @@ pipeline {
                 }
             }
                     
-            stage('Build') {
+            stage('Build forDev') {
                 steps {
                        echo 'Start the docker build'                  
                        sh 'docker-compose build'
@@ -26,6 +26,26 @@ pipeline {
                        echo 'Application Started !'
                 }
             }
+            stage('Pre Build: Prod') {
+                steps {
+                       sh 'rm frontend/.env || true'
+                       sh 'touch frontend/.env'
+                       sh """ echo "REACT_APP_BACKEND_URL=${params.K8S_REACT_APP_BACKEND_URL}" >> frontend/.env """
+                       echo "Updated frontend environment file !!"
+                }
+            }
+
+            stage('Build for Prod') {
+                steps {
+                       echo 'Start the docker build'                  
+                       sh 'docker-compose build frontend'
+                       echo "Build Successful!"
+                }
+            }
+
+
+
+
            
             stage('Sonarqube Scanning') {
                 
@@ -58,6 +78,10 @@ pipeline {
             stage('K8s deployment ') {
                 steps {
                        echo 'Deploying on K8s !!'
+                       sh 'kubectl apply -f k8s/mysql-storage.yaml || true'
+                       sh 'kubectl apply -f k8s/frontend-deploy.yaml '
+                       sh """envsubst < k8s/db-deploy.yaml|kubectl apply -f - """
+                       sh """envsubst < k8s/backend-deploy.yaml|kubectl apply -f - """
                 }
             }
         
