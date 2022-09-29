@@ -25,7 +25,7 @@ spec:
         - name:  MYSQL_DATABASE
           value: ${MYSQL_DATABASE}
         - name: CORS_ALLOW_URL
-          value: ${CORS_ALLOW_URL}
+          value: ${K8S_CORS_ALLOW_URL}
         - name: MYSQL_ROOT_USER
           value: ${MYSQL_ROOT_USER}
         - name: MYSQL_CONNECTION
