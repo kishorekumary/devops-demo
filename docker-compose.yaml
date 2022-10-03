@@ -11,10 +11,10 @@ services:
       resources:
            requests:
              memory: "256Mi"
-             cpu: "500m"
+             cpus: "500m"
            limits:
              memory: "512Mi"
-             cpu: "1000m"
+             cpus: "1000m"
      expose:
        - 3000
      ports:
@@ -39,10 +39,10 @@ services:
       resources:
            requests:
              memory: "256Mi"
-             cpu: "500m"
+             cpus: "500m"
            limits:
              memory: "512Mi"
-             cpu: "1000m"
+             cpus: "1000m"
      depends_on:
        - mysql-db
      expose:
@@ -63,10 +63,10 @@ services:
       resources:
            requests:
              memory: "256Mi"
-             cpu: "500m"
+             cpus: "500m"
            limits:
              memory: "512Mi"
-             cpu: "1000m"
+             cpus: "1000m"
     environment:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_ROOT_USER: ${MYSQL_ROOT_USER}
