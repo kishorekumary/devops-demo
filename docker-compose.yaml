@@ -27,6 +27,13 @@ services:
        CORS_ALLOW_URL: ${CORS_ALLOW_URL}
        MYSQL_CONNECTION: ${MYSQL_CONNECTION}
      restart: always
+     resources:
+          requests:
+            memory: "256Mi"
+            cpu: "500m"
+          limits:
+            memory: "512Mi"
+            cpu: "1000m"
      depends_on:
        - mysql-db
      expose:
