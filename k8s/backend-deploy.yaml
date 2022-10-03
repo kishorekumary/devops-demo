@@ -17,6 +17,13 @@ spec:
       containers:
       - name: backend
         image:  nexus.zymrinc.com:8083/devops-proj-4/backend:latest
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "500m"
+          limits:
+            memory: "512Mi"
+            cpu: "1000m"
         imagePullPolicy: Always
         ports:
           - name: http

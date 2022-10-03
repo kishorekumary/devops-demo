@@ -7,6 +7,14 @@ services:
        dockerfile: Dockerfile
      container_name: front-end 
      restart: always
+     deploy:
+      resources:
+           reservations:
+             memory: "64Mi"
+             cpus: "200m"
+           limits:
+             memory: "512Mi"
+             cpus: "1000m"
      expose:
        - 3000
      ports:
@@ -27,6 +35,14 @@ services:
        CORS_ALLOW_URL: ${CORS_ALLOW_URL}
        MYSQL_CONNECTION: ${MYSQL_CONNECTION}
      restart: always
+     deploy:
+      resources:
+           reservations:
+             memory: "64Mi"
+             cpus: "200m"
+           limits:
+             memory: "512Mi"
+             cpus: "1000m"
      depends_on:
        - mysql-db
      expose:
@@ -43,6 +59,14 @@ services:
       context: ./db
       dockerfile: Dockerfile
     restart: always
+    deploy:
+      resources:
+           reservations:
+             memory: "64Mi"
+             cpus: "200m"
+           limits:
+             memory: "512Mi"
+             cpus: "1000m"
     environment:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_ROOT_USER: ${MYSQL_ROOT_USER}
