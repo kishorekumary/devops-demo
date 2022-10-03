@@ -9,9 +9,9 @@ services:
      restart: always
      deploy:
       resources:
-           requests:
-             memory: "256Mi"
-             cpus: "500m"
+           reservations:
+             memory: "64Mi"
+             cpus: "200m"
            limits:
              memory: "512Mi"
              cpus: "1000m"
@@ -38,8 +38,8 @@ services:
      deploy:
       resources:
            requests:
-             memory: "256Mi"
-             cpus: "500m"
+             memory: "64Mi"
+             cpus: "200m"
            limits:
              memory: "512Mi"
              cpus: "1000m"
@@ -62,8 +62,8 @@ services:
     deploy:
       resources:
            requests:
-             memory: "256Mi"
-             cpus: "500m"
+             memory: "64Mi"
+             cpus: "200m"
            limits:
              memory: "512Mi"
              cpus: "1000m"
