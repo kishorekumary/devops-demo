@@ -37,7 +37,7 @@ services:
      restart: always
      deploy:
       resources:
-           requests:
+           reservations:
              memory: "64Mi"
              cpus: "200m"
            limits:
@@ -61,7 +61,7 @@ services:
     restart: always
     deploy:
       resources:
-           requests:
+           reservations:
              memory: "64Mi"
              cpus: "200m"
            limits:
