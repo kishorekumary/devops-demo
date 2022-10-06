@@ -78,15 +78,21 @@ pipeline {
                                     def mailRecipients = 'kishore.kumar@zymr.com'
                                     def jobName = currentBuild.fullDisplayName
                                     //emailext body: '''${SCRIPT, template="groovy-html.template"}''',
-                                    emailext body: '''Please Approve the Deployment''',
+                                    emailext body: '''Please Approve the Deployment By visiting ${BUILD_URL}''',
                                         mimeTye: 'text/html',
-                                        subject: "[Jenkins] Started ${jobName}",
+                                        subject: "[Jenkins] Approve the Deployment On Production ${jobName}",
                                         to: "${mailRecipients}",
                                         replyTo: "${mailRecipients}"
                                         
                                     }
                                 }
                              }
+
+                    stage('Approve') {
+                        steps {
+                            input("Do you wish to approve the prod deployment ?")
+                        }
+                    }
 
             stage('K8s deployment ') {
                 steps {
