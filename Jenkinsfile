@@ -73,6 +73,7 @@ pipeline {
             }
             
             stage('Test') {
+              steps {  
                 def userAborted = false
                 emailext body: '''
                 Please go to console output of ${BUILD_URL} input to Approve or Reject.<br>
@@ -81,7 +82,7 @@ pipeline {
                 subject: "[Jenkins] ${currentBuild.fullDisplayName  } Build Approval Request",
                 from: "kishore.kumar@zymr.com"
                 to: "kishore.kumar@zymr.com"
-                steps {
+                
                     input("Test completed ? Please provide Approvals for Prod Release ?")
                 }  
             }
