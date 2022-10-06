@@ -104,10 +104,12 @@ pipeline {
 
                 }
             }
-          post {
-             success {
-                 slackSend "Build deployed successfully - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
-                }
-            }
+    
+                    stage('Slack it'){
+                        steps {
+                            slackSend channel: '#slack-test-channel', 
+                                    message: 'Hello, world'
+                        }
+                    }
         }
    }
