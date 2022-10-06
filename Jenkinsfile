@@ -82,7 +82,7 @@ pipeline {
                                         mimeTye: 'text/html',
                                         subject: "[Jenkins- ${jobName}] Approve the Deployment On Production ",
                                         to: "${mailRecipients}",
-                                        replyTo: "$DEFAULT_REPLYTO"
+                                        replyTo: "${mailRecipients}"
                                     }
                                 }
                              }
@@ -108,8 +108,11 @@ pipeline {
         }
 
           post{
-        always{
-            slackSend( channel: "#devops-projects", token: "Slack-Token", color: "good", message: "Project-4 Successfully Built !")
+        success {
+            slackSend( channel: "#devops-projects", token: "Slack-Token", color: "good", message: "Project-4 at ${BUILD_URL} has result Success !")
+        }
+        failure {
+            slackSend( channel: "#devops-projects", token: "Slack-Token", color: "good", message: "Project-4 at ${BUILD_URL} has result fail ")
         }
     }
    }
