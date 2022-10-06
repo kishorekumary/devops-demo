@@ -105,11 +105,10 @@ pipeline {
                 }
             }
     
-                    stage('Slack it'){
-                        steps {
-                            slackSend channel: '#slack-test-channel', 
-                                    message: 'Hello, world'
-                        }
-                    }
+                  post{
+        always{
+            slackSend( channel: "#Jenkins", token: "Slack-Token", color: "good", message: "Test Email")
+        }
+    }
         }
    }
