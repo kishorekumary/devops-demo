@@ -72,21 +72,21 @@ pipeline {
                 }
             }
             
-          stage('Email-Notify') {
-           steps {
-               script {
-                   def mailRecipients = 'kishore.kumar@zymr.com'
-                   def jobName = currentBuild.fullDisplayName
-                   //emailext body: '''${SCRIPT, template="groovy-html.template"}''',
-                   emailext body: '''Approve the Deployment''',
-                       mimeTye: 'text/html',
-                       subject: "[Jenkins] Started ${jobName}",
-                       to: "${mailRecipients}",
-                       replyTo: "${mailRecipients}",
-                       
-                   }
-            }
-        }
+                            stage('Email-Notify') {
+                            steps {
+                                script {
+                                    def mailRecipients = 'kishore.kumar@zymr.com'
+                                    def jobName = currentBuild.fullDisplayName
+                                    //emailext body: '''${SCRIPT, template="groovy-html.template"}''',
+                                    emailext body: '''Please Approve the Deployment''',
+                                        mimeTye: 'text/html',
+                                        subject: "[Jenkins] Started ${jobName}",
+                                        to: "${mailRecipients}",
+                                        replyTo: "${mailRecipients}"
+                                        
+                                    }
+                                }
+                             }
 
             stage('K8s deployment ') {
                 steps {
