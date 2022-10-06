@@ -104,11 +104,12 @@ pipeline {
 
                 }
             }
-    
-                  post{
+                    
+        }
+
+          post{
         always{
-            slackSend( channel: "#Jenkins", token: "Slack-Token", color: "good", message: "Test Email")
+            slackSend( channel: "#devops-projects", token: "Slack-Token", color: "good", message: "Project-4 Successfully Built !")
         }
     }
-        }
    }
