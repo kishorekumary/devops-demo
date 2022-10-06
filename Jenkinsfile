@@ -1,15 +1,3 @@
-def user
-node {
-  wrap([$class: 'BuildUser']) {
-    user = env.BUILD_USER_ID
-  }
-  
-  emailext mimeType: 'text/html',
-                 subject: "[Jenkins]${currentBuild.fullDisplayName}",
-                 to: "kishore.kumar@zymr.com",
-                 body: '''<a href="${BUILD_URL}input">click to approve</a>'''
-}
-
 pipeline {
     agent { label 'proj-4' }
     
@@ -83,18 +71,21 @@ pipeline {
                     }
                 }
             }
-           stage('deploy') {
-            input {
-                message "Should we continue?"
-                ok "Yes"
+            
+            stage('Test') {
+                def userAborted = false
+                emailext body: '''
+                Please go to console output of ${BUILD_URL} input to Approve or Reject.<br>
+                ''',
+                mimeType: 'text/html',
+                subject: "[Jenkins] ${currentBuild.fullDisplayName  } Build Approval Request",
+                from: "kishore.kumar@zymr.com"
+                to: "kishore.kumar@zymr.com"
+                steps {
+                    input("Test completed ? Please provide Approvals for Prod Release ?")
+                }  
             }
-            when {
-                expression { user == 'hardCodeApproverJenkinsId'}
-            }
-            steps {
-                sh "echo 'describe your deployment' "
-            }
-        }
+
             stage('K8s deployment ') {
                 steps {
                        echo 'Deploying on K8s !!'
