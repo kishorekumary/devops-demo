@@ -72,20 +72,21 @@ pipeline {
                 }
             }
             
-            stage('Test') {
-              steps {  
-                def userAborted = false
-                emailext body: '''
-                Please go to console output of ${BUILD_URL} input to Approve or Reject.<br>
-                ''',
-                mimeType: 'text/html',
-                subject: "[Jenkins] ${currentBuild.fullDisplayName  } Build Approval Request",
-                from: "kishore.kumar@zymr.com"
-                to: "kishore.kumar@zymr.com"
-                
-                    input("Test completed ? Please provide Approvals for Prod Release ?")
-                }  
+          stage('Email-Notify') {
+           steps {
+               script {
+                   def mailRecipients = 'kishore.kumar@zymr.com'
+                   def jobName = currentBuild.fullDisplayName
+                   //emailext body: '''${SCRIPT, template="groovy-html.template"}''',
+                   emailext body: '''Approve the Deployment''',
+                       mimeTye: 'text/html',
+                       subject: "[Jenkins] Started ${jobName}",
+                       to: "${mailRecipients}",
+                       replyTo: "${mailRecipients}",
+                       
+                   }
             }
+        }
 
             stage('K8s deployment ') {
                 steps {
