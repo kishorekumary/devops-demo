@@ -50,7 +50,7 @@ pipeline {
                     echo "Send for Sonarqube analysis !!"
                 }
             }
-           
+           /*
             stage('Publish To Nexus') {
                 steps {
                        sh 'docker tag frontend:latest nexus.zymrinc.com:8083/devops-proj-4/frontend:$MAJOR_VERSION.$MINOR_VERSION.$BUILD_NUMBER'
@@ -83,6 +83,6 @@ pipeline {
 
                 }
             }
-        
+        */
         }
    }
