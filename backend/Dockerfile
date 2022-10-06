@@ -22,7 +22,6 @@
 RUN groupadd -r -g 2000 javauser && useradd -u 2000 -r -g javauser javauser
 RUN chown -R javauser:javauser /usr/app
 USER javauser
-
  #Runs the background
  ENTRYPOINT ["java","-jar","/usr/app/webapp.jar"]
 
