@@ -80,17 +80,16 @@ pipeline {
                                     //emailext body: '''${SCRIPT, template="groovy-html.template"}''',
                                     emailext body: '''Please Approve the Deployment By visiting ${BUILD_URL}''',
                                         mimeTye: 'text/html',
-                                        subject: "[Jenkins] Approve the Deployment On Production ${jobName}",
+                                        subject: "[Jenkins- ${jobName}] Approve the Deployment On Production ",
                                         to: "${mailRecipients}",
-                                        replyTo: "${mailRecipients}"
-                                        
+                                        replyTo: "$DEFAULT_REPLYTO
                                     }
                                 }
                              }
 
-                    stage('Approve') {
+                    stage('Waiting for Approval') {
                         steps {
-                            input("Do you wish to approve the prod deployment ?")
+                            input("Do you wish to Approve the prod deployment ?")
                         }
                     }
 
@@ -105,6 +104,10 @@ pipeline {
 
                 }
             }
-        
+          post {
+             success {
+                 slackSend "Build deployed successfully - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
+                }
+            }
         }
    }
