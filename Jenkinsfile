@@ -82,7 +82,7 @@ pipeline {
                                         mimeTye: 'text/html',
                                         subject: "[Jenkins- ${jobName}] Approve the Deployment On Production ",
                                         to: "${mailRecipients}",
-                                        replyTo: "$DEFAULT_REPLYTO
+                                        replyTo: "$DEFAULT_REPLYTO"
                                     }
                                 }
                              }
