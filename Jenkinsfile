@@ -49,6 +49,7 @@ pipeline {
                 steps {
                     echo "Send for Sonarqube analysis !!"
                     sh '''docker run --rm --network=host    -e SONAR_HOST_URL="http://20.20.4.29:9000"      -e SONAR_LOGIN="sqp_d848b384fbfa21c9780373501e3d9ecd9e12efed"   -v $(pwd)/frontend:/usr/src/   sonarsource/sonar-scanner-cli '''
+                    sh '''docker run --rm -v $(pwd)/backend:/home -w /home maven:3.8.6-jdk-11 mvn clean verify sonar:sonar -Dsonar.projectKey=project-4-backen   -Dsonar.host.url=http://20.20.4.29:9000 -Dsonar.login=sqp_252ed1ee03105eb70213bbfc1665f3c902706e59'''
                 }
             }
 
