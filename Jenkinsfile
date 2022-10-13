@@ -50,6 +50,27 @@ pipeline {
                     echo "Send for Sonarqube analysis !!"
                 }
             }
+
+            stage('Email-Notify') {
+                
+                steps {
+                    script {
+                        def mailRecipients = 'kishore.kumar@zymr.com'
+                        def jobName = currentBuild.fullDisplayName
+                        emailext body: '''Please Approve the Deployment By visiting ${BUILD_URL}''',
+                        mimeTye: 'text/html',
+                        subject: "[Jenkins- ${jobName}] Approve the Deployment On Production ",
+                        to: "${mailRecipients}",
+                        replyTo: "${mailRecipients}"
+                    }
+                }
+            }
+
+            stage('Waiting for Approval') {
+                steps {
+                    input("Do you wish to Approve the prod deployment ?")
+                }
+            }
            
             stage('Publish To Nexus') {
                 steps {
@@ -85,4 +106,15 @@ pipeline {
             }
         
         }
-   }
+
+
+    post{
+        success {
+            slackSend( channel: "#devops-projects", token: "Slack-Token", color: "good", message: "Project-4 at ${BUILD_URL} has deployed the latest onto the prod!")
+        }
+        failure {
+            slackSend( channel: "#devops-projects", token: "Slack-Token", color: "good", message: "Project-4 at ${BUILD_URL} has result fail ")
+        }
+    }
+
+}
