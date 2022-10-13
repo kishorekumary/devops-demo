@@ -48,6 +48,7 @@ pipeline {
                 
                 steps {
                     echo "Send for Sonarqube analysis !!"
+                    sh '''docker run --rm --network=host    -e SONAR_HOST_URL="http://20.20.4.29:9000"      -e SONAR_LOGIN="sqp_d848b384fbfa21c9780373501e3d9ecd9e12efed"   -v $(pwd)/frontend:/usr/src/   sonarsource/sonar-scanner-cli '''
                 }
             }
 
