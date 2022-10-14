@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-envs
+data:
+  MYSQL_DATABASE: ${MYSQL_DATABASE}
+  CORS_ALLOW_URL: ${K8S_CORS_ALLOW_URL}
+  MYSQL_ROOT_USER: ${MYSQL_ROOT_USER}
+  MYSQL_CONNECTION: ${MYSQL_CONNECTION}
+  

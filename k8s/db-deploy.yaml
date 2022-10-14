@@ -18,7 +18,7 @@ spec:
         - name: nexus-creds
       containers:
       - name: mysql-db
-        image:  nexus.zymrinc.com:8083/devops-proj-4/mysql-db:${RELEASE_TAG}
+        image:  nexus.zymrinc.com:8083/devops-proj-4/mysql-db:latest
         resources:
           requests:
             memory: "256Mi"
@@ -45,7 +45,7 @@ spec:
       volumes:
         - name: mysql-persistent-storage
           persistentVolumeClaim:
-            claimName: mysql-pvc
+            claimName: proj4-mysql-pvc
 ---
 apiVersion: v1
 kind: Service
