@@ -74,17 +74,17 @@ pipeline {
            
             stage('Publish To Nexus') {
                 steps {
-                       sh 'docker tag frontend:latest nexus.zymrinc.com:8083/devops-proj-4/frontend:$MAJOR_VERSION.$MINOR_VERSION.$BUILD_NUMBER'
+                       sh 'docker tag frontend:latest nexus.zymrinc.com:8083/devops-proj-4/frontend:$RELEASE_TAG'
                        sh 'docker tag frontend:latest nexus.zymrinc.com:8083/devops-proj-4/frontend:latest'
-                       sh 'docker tag backend:latest nexus.zymrinc.com:8083/devops-proj-4/backend:$MAJOR_VERSION.$MINOR_VERSION.$BUILD_NUMBER'
+                       sh 'docker tag backend:latest nexus.zymrinc.com:8083/devops-proj-4/backend:$RELEASE_TAG'
                        sh 'docker tag backend:latest nexus.zymrinc.com:8083/devops-proj-4/backend:latest'
-                       sh 'docker tag mysql-db:latest nexus.zymrinc.com:8083/devops-proj-4/mysql-db:$MAJOR_VERSION.$MINOR_VERSION.$BUILD_NUMBER'
+                       sh 'docker tag mysql-db:latest nexus.zymrinc.com:8083/devops-proj-4/mysql-db:$RELEASE_TAG'
                        sh 'docker tag mysql-db:latest nexus.zymrinc.com:8083/devops-proj-4/mysql-db:latest'                
                     withCredentials([usernamePassword(credentialsId: 'Nexus-Cred', passwordVariable: 'password', usernameVariable: 'username')]) {
                        sh 'docker login nexus.zymrinc.com:8083 -u $username -p $password'
-                       sh 'docker push nexus.zymrinc.com:8083/devops-proj-4/frontend:$MAJOR_VERSION.$MINOR_VERSION.$BUILD_NUMBER'
-                       sh 'docker push nexus.zymrinc.com:8083/devops-proj-4/backend:$MAJOR_VERSION.$MINOR_VERSION.$BUILD_NUMBER'
-                       sh 'docker push nexus.zymrinc.com:8083/devops-proj-4/mysql-db:$MAJOR_VERSION.$MINOR_VERSION.$BUILD_NUMBER'
+                       sh 'docker push nexus.zymrinc.com:8083/devops-proj-4/frontend:$RELEASE_TAG'
+                       sh 'docker push nexus.zymrinc.com:8083/devops-proj-4/backend:$RELEASE_TAG'
+                       sh 'docker push nexus.zymrinc.com:8083/devops-proj-4/mysql-db:$RELEASE_TAG'
                        sh 'docker push nexus.zymrinc.com:8083/devops-proj-4/frontend:latest'
                        sh 'docker push nexus.zymrinc.com:8083/devops-proj-4/backend:latest'
                        sh 'docker push nexus.zymrinc.com:8083/devops-proj-4/mysql-db:latest'
@@ -97,7 +97,7 @@ pipeline {
                 steps {
                        echo 'Deploying on K8s !!'
                        sh 'kubectl apply -f k8s/mysql-storage.yaml || true'
-                       sh 'kubectl apply -f k8s/frontend-deploy.yaml '
+                       sh """envsubst < k8s/frontend-deploy.yaml|kubectl apply -f -""" 
                        sh """envsubst < k8s/db-deploy.yaml|kubectl apply -f - """
                        sh """envsubst < k8s/backend-deploy.yaml|kubectl apply -f - """
                        sh "docker logout nexus.zymrinc.com:8083"
