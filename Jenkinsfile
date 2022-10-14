@@ -97,6 +97,7 @@ pipeline {
                 steps {
                        echo 'Deploying on K8s !!'
                        sh 'kubectl apply -f k8s/mysql-storage.yaml || true'
+                        sh """envsubst < k8s/configmap.yaml|kubectl apply -f -""" 
                        sh """envsubst < k8s/frontend-deploy.yaml|kubectl apply -f -""" 
                        sh """envsubst < k8s/db-deploy.yaml|kubectl apply -f - """
                        sh """envsubst < k8s/backend-deploy.yaml|kubectl apply -f - """
@@ -108,13 +109,13 @@ pipeline {
         }
 
 
-    post{
+   /* post{
         success {
             slackSend( channel: "#devops-projects", token: "Slack-Token", color: "good", message: "Project-4 at ${BUILD_URL} has deployed the latest onto the prod!")
         }
         failure {
             slackSend( channel: "#devops-projects", token: "Slack-Token", color: "good", message: "Project-4 at ${BUILD_URL} has result fail ")
         }
-    }
+    }*/
 
 }

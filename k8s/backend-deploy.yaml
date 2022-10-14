@@ -28,15 +28,9 @@ spec:
         ports:
           - name: http
             containerPort: 9001
-        env:             
-        - name:  MYSQL_DATABASE
-          value: ${MYSQL_DATABASE}
-        - name: CORS_ALLOW_URL
-          value: ${K8S_CORS_ALLOW_URL}
-        - name: MYSQL_ROOT_USER
-          value: ${MYSQL_ROOT_USER}
-        - name: MYSQL_CONNECTION
-          value: ${MYSQL_CONNECTION}
+        envFrom:             
+        - configMapRef:
+        name: config-envs
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
