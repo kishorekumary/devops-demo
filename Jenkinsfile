@@ -97,7 +97,7 @@ pipeline {
                 steps {
                        echo 'Deploying on K8s !!'
                        sh 'kubectl apply -f k8s/mysql-storage.yaml || true'
-                       sh 'kubectl apply -f k8s/frontend-deploy.yaml '
+                       sh """envsubst < k8s/frontend-deploy.yaml|kubectl apply -f -""" 
                        sh """envsubst < k8s/db-deploy.yaml|kubectl apply -f - """
                        sh """envsubst < k8s/backend-deploy.yaml|kubectl apply -f - """
                        sh "docker logout nexus.zymrinc.com:8083"
