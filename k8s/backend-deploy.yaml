@@ -29,22 +29,22 @@ spec:
           - name: http
             containerPort: 9001
         env:
-          - name:
+          - name: MYSQL_DATABASE
             valueFrom:        
               configMapKeyRef:
                 name: config-envs
                 key: MYSQL_DATABASE
-          - name:
+          - name: CORS_ALLOW_URL
             valueFrom:        
               configMapKeyRef:
                 name: config-envs
                 key: CORS_ALLOW_URL
-          - name:
+          - name: MYSQL_ROOT_USER
             valueFrom:        
               configMapKeyRef:
                 name: config-envs
                 key: MYSQL_ROOT_USER
-          - name:
+          - name: MYSQL_CONNECTION
             valueFrom:        
               configMapKeyRef:
                 name: config-envs
