@@ -28,7 +28,7 @@ spec:
             cpu: "1000m"
         env:
           - name: MYSQL_DATABASE
-             valueFrom:        
+            valueFrom:        
                configMapKeyRef:
                  name: config-envs
                  key: MYSQL_DATABASE
@@ -42,7 +42,6 @@ spec:
               secretKeyRef: 
                 name: mysql-secret 
                 key: password
-      
         ports:
         - containerPort: 3306
         volumeMounts:
