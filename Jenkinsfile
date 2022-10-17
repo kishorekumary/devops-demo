@@ -96,8 +96,9 @@ pipeline {
             stage('K8s deployment ') {
                 steps {
                        echo 'Deploying on K8s !!'
+                       sh """envsubst < k8s/secrets.yaml|kubectl apply -f -""" 
                        sh 'kubectl apply -f k8s/mysql-storage.yaml || true'
-                        sh """envsubst < k8s/configmap.yaml|kubectl apply -f -""" 
+                       sh """envsubst < k8s/configmap.yaml|kubectl apply -f -""" 
                        sh """envsubst < k8s/frontend-deploy.yaml|kubectl apply -f -""" 
                        sh """envsubst < k8s/db-deploy.yaml|kubectl apply -f - """
                        sh """envsubst < k8s/backend-deploy.yaml|kubectl apply -f - """

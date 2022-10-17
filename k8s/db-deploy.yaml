@@ -18,7 +18,7 @@ spec:
         - name: nexus-creds
       containers:
       - name: mysql-db
-        image:  nexus.zymrinc.com:8083/devops-proj-4/mysql-db:latest
+        image:  nexus.zymrinc.com:8083/devops-proj-4/mysql-db:${RELEASE_TAG}
         resources:
           requests:
             memory: "256Mi"
@@ -27,15 +27,21 @@ spec:
             memory: "512Mi"
             cpu: "1000m"
         env:
-        - name: MYSQL_DATABASE
-          value: ${MYSQL_DATABASE}
-        - name: MYSQL_ROOT_USER
-          value: ${MYSQL_ROOT_USER}
-        - name: MYSQL_ROOT_PASSWORD
-          valueFrom: 
-            secretKeyRef: 
-              name: mysql-secret 
-              key: password
+          - name: MYSQL_DATABASE
+             valueFrom:        
+               configMapKeyRef:
+                 name: config-envs
+                 key: MYSQL_DATABASE
+          - name: MYSQL_ROOT_USER
+            valueFrom:        
+              configMapKeyRef:
+                name: config-envs
+                key: MYSQL_ROOT_USER 
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom: 
+              secretKeyRef: 
+                name: mysql-secret 
+                key: password
       
         ports:
         - containerPort: 3306
