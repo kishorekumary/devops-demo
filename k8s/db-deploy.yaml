@@ -27,16 +27,21 @@ spec:
             memory: "512Mi"
             cpu: "1000m"
         env:
-        - name: MYSQL_DATABASE
-          value: ${MYSQL_DATABASE}
-        - name: MYSQL_ROOT_USER
-          value: ${MYSQL_ROOT_USER}
-        - name: MYSQL_ROOT_PASSWORD
-          valueFrom: 
-            secretKeyRef: 
-              name: mysql-secret 
-              key: password
-      
+          - name: MYSQL_DATABASE
+            valueFrom:        
+               configMapKeyRef:
+                 name: config-envs
+                 key: MYSQL_DATABASE
+          - name: MYSQL_ROOT_USER
+            valueFrom:        
+              configMapKeyRef:
+                name: config-envs
+                key: MYSQL_ROOT_USER 
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom: 
+              secretKeyRef: 
+                name: mysql-secret 
+                key: password
         ports:
         - containerPort: 3306
         volumeMounts:
@@ -45,7 +50,7 @@ spec:
       volumes:
         - name: mysql-persistent-storage
           persistentVolumeClaim:
-            claimName: mysql-pvc
+            claimName: proj4-mysql-pvc
 ---
 apiVersion: v1
 kind: Service

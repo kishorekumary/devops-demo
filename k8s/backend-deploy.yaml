@@ -28,20 +28,33 @@ spec:
         ports:
           - name: http
             containerPort: 9001
-        env:             
-        - name:  MYSQL_DATABASE
-          value: ${MYSQL_DATABASE}
-        - name: CORS_ALLOW_URL
-          value: ${K8S_CORS_ALLOW_URL}
-        - name: MYSQL_ROOT_USER
-          value: ${MYSQL_ROOT_USER}
-        - name: MYSQL_CONNECTION
-          value: ${MYSQL_CONNECTION}
-        - name: MYSQL_ROOT_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mysql-secret
-              key: password
+        env:
+          - name: MYSQL_DATABASE
+            valueFrom:        
+              configMapKeyRef:
+                name: config-envs
+                key: MYSQL_DATABASE
+          - name: CORS_ALLOW_URL
+            valueFrom:        
+              configMapKeyRef:
+                name: config-envs
+                key: CORS_ALLOW_URL
+          - name: MYSQL_ROOT_USER
+            valueFrom:        
+              configMapKeyRef:
+                name: config-envs
+                key: MYSQL_ROOT_USER
+          - name: MYSQL_CONNECTION
+            valueFrom:        
+              configMapKeyRef:
+                name: config-envs
+                key: MYSQL_CONNECTION
+          
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+             secretKeyRef:
+               name: mysql-secret
+               key: password
       restartPolicy: Always
       imagePullSecrets:
         - name: nexus-creds
