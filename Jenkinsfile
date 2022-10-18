@@ -35,6 +35,12 @@ pipeline {
                        echo "Updated frontend environment file !!"
                 }
             }
+            
+            stage('Vulnerability Report') {
+                steps {
+                    sh 'bash grype-scan.sh latest '
+                }
+            }
 
             stage('Build for Prod') {
                 steps {
