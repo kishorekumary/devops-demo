@@ -74,21 +74,21 @@ pipeline {
            
             stage('Publish To Nexus') {
                 steps {
-                       sh 'docker tag frontend:latest nexus.zymrinc.com:8083/devops-proj-4/frontend:$RELEASE_TAG'
-                       sh 'docker tag frontend:latest nexus.zymrinc.com:8083/devops-proj-4/frontend:latest'
-                       sh 'docker tag backend:latest nexus.zymrinc.com:8083/devops-proj-4/backend:$RELEASE_TAG'
-                       sh 'docker tag backend:latest nexus.zymrinc.com:8083/devops-proj-4/backend:latest'
-                       sh 'docker tag mysql-db:latest nexus.zymrinc.com:8083/devops-proj-4/mysql-db:$RELEASE_TAG'
-                       sh 'docker tag mysql-db:latest nexus.zymrinc.com:8083/devops-proj-4/mysql-db:latest'                
-                    withCredentials([usernamePassword(credentialsId: 'Nexus-Cred', passwordVariable: 'password', usernameVariable: 'username')]) {
-                       sh 'docker login nexus.zymrinc.com:8083 -u $username -p $password'
-                       sh 'docker push nexus.zymrinc.com:8083/devops-proj-4/frontend:$RELEASE_TAG'
-                       sh 'docker push nexus.zymrinc.com:8083/devops-proj-4/backend:$RELEASE_TAG'
-                       sh 'docker push nexus.zymrinc.com:8083/devops-proj-4/mysql-db:$RELEASE_TAG'
-                       sh 'docker push nexus.zymrinc.com:8083/devops-proj-4/frontend:latest'
-                       sh 'docker push nexus.zymrinc.com:8083/devops-proj-4/backend:latest'
-                       sh 'docker push nexus.zymrinc.com:8083/devops-proj-4/mysql-db:latest'
-                       echo 'Artifacts Published to Nexus Repo!'
+                       sh 'docker tag frontend:latest ykishore/frontend:$RELEASE_TAG'
+                       sh 'docker tag frontend:latest ykishore/frontend:latest'
+                       sh 'docker tag backend:latest ykishore/backend:$RELEASE_TAG'
+                       sh 'docker tag backend:latest ykishore/backend:latest'
+                       sh 'docker tag mysql-db:latest ykishore/mysql-db:$RELEASE_TAG'
+                       sh 'docker tag mysql-db:latest ykishore/mysql-db:latest'                
+                    withCredentials([usernamePassword(credentialsId: 'ykk-docker-credentials', passwordVariable: 'password', usernameVariable: 'username')]) {
+                       sh 'docker login  -u $username -p $password'
+                       sh 'docker push ykishore/frontend:$RELEASE_TAG'
+                       sh 'docker push ykishore/backend:$RELEASE_TAG'
+                       sh 'docker push ykishore/mysql-db:$RELEASE_TAG'
+                       sh 'docker push ykishore/frontend:latest'
+                       sh 'docker push ykishore/backend:latest'
+                       sh 'docker push ykishore/mysql-db:latest'
+                       echo 'Artifacts Published to docker Repo!'
                     }
                 }
             }
@@ -102,8 +102,6 @@ pipeline {
                        sh """envsubst < k8s/frontend-deploy.yaml|kubectl apply -f -""" 
                        sh """envsubst < k8s/db-deploy.yaml|kubectl apply -f - """
                        sh """envsubst < k8s/backend-deploy.yaml|kubectl apply -f - """
-                       sh "docker logout nexus.zymrinc.com:8083"
-
                 }
             }
         

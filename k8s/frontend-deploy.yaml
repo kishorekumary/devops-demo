@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: nexus.zymrinc.com:8083/devops-proj-4/frontend:${RELEASE_TAG}
+          image: ykishore/frontend:${RELEASE_TAG}
           resources:
             requests:
               memory: "256Mi"
