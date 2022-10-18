@@ -14,8 +14,8 @@ spec:
         appdb: mysql-db
     spec:
       restartPolicy: Always
-      imagePullSecrets:
-        - name: nexus-creds
+      # imagePullSecrets:
+      #   - name: nexus-creds
       containers:
       - name: mysql-db
         image:  ykishore/mysql-db:${RELEASE_TAG}
