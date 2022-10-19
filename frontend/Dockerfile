@@ -29,14 +29,7 @@ COPY nginx/nginx.conf /etc/nginx/conf.d/
 #expose Port 80 of the container
 EXPOSE 80
 #add permissions for nginx user
-RUN chown -R nginx:nginx /usr/share/nginx/html  && chmod -R 755 /usr/share/nginx/html && \
-        chown -R nginx:nginx /var/cache/nginx && \
-        chown -R nginx:nginx /var/log/nginx && \
-        chown -R nginx:nginx /etc/nginx/conf.d
-RUN touch /var/run/nginx.pid && \
-        chown -R nginx:nginx /var/run/nginx.pid
-#set user to nginx
-USER nginx
+
 #To run in foreground debug mode
 CMD ["nginx", "-g", "daemon off;"]
 
