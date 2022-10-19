@@ -29,7 +29,7 @@ COPY nginx/nginx.conf /etc/nginx/conf.d/
 #expose Port 80 of the container
 EXPOSE 80
 #add permissions for nginx user
-
+RUN apk update  && apk add busybox-extras 
 #To run in foreground debug mode
 CMD ["nginx", "-g", "daemon off;"]
 
