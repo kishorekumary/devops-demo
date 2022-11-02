@@ -99,7 +99,7 @@ pipeline {
                 }
             }
            
-            stage('K8s deployment ') {
+           /* stage('K8s deployment ') {
                 steps {
                        echo 'Deploying on K8s !!'
                        sh """envsubst < k8s/secrets.yaml|kubectl apply -f -""" 
@@ -111,7 +111,7 @@ pipeline {
                        sh "docker logout nexus.zymrinc.com:8083"
 
                 }
-            }
+            }*/
         
         }
 
