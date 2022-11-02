@@ -99,10 +99,11 @@ pipeline {
                 }
             }
            
-           /* stage('K8s deployment ') {
+            stage('K8s deployment ') {
                 steps {
                        echo 'Deploying on K8s !!'
                        sh """envsubst < k8s/secrets.yaml|kubectl apply -f -""" 
+                       sh """cd frontend && envsubst < values.yaml && helm template test frontned &&  helm install frontend frontend"""
                        sh 'kubectl apply -f k8s/mysql-storage.yaml || true'
                        sh """envsubst < k8s/configmap.yaml|kubectl apply -f -""" 
                        sh """envsubst < k8s/frontend-deploy.yaml|kubectl apply -f -""" 
@@ -111,18 +112,18 @@ pipeline {
                        sh "docker logout nexus.zymrinc.com:8083"
 
                 }
-            }*/
+            }
         
         }
 
 
-    post{
+    /*post{
         success {
             slackSend( channel: "#devops-projects", token: "Slack-Token", color: "good", message: "Project-4 at ${BUILD_URL} has deployed the latest onto the prod!")
         }
         failure {
             slackSend( channel: "#devops-projects", token: "Slack-Token", color: "good", message: "Project-4 at ${BUILD_URL} has result fail ")
         }
-    }
+    }*/
 
 }
