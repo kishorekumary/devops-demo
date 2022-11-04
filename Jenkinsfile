@@ -11,7 +11,7 @@ pipeline {
                 }
             }
                     
-            stage('Build forDev') {
+            /*stage('Build forDev') {
                 steps {
                        echo 'Start the docker build'                  
                        sh 'docker-compose build'
@@ -25,7 +25,7 @@ pipeline {
                        sh 'docker-compose up -d'
                        echo 'Application Started !'
                 }
-            }
+            }*/
             
             stage('Pre Build: Prod') {
                 steps {
@@ -36,16 +36,16 @@ pipeline {
                 }
             }
             
-            stage('Vulnerability Report') {
+            /*stage('Vulnerability Report') {
                 steps {
                     sh 'bash grype-scan.sh latest '
                 }
-            }
+            }*/
 
             stage('Build for Prod') {
                 steps {
                        echo 'Start the docker build'                  
-                       sh 'docker-compose build frontend'
+                       sh 'docker-compose build '
                        echo "Build Successful!"
                 }
             }
@@ -72,11 +72,11 @@ pipeline {
                 }
             }
 
-            stage('Waiting for Approval') {
+            /*stage('Waiting for Approval') {
                 steps {
                     input("Do you wish to Approve the prod deployment ?")
                 }
-            }
+            }*/
            
             stage('Publish To Nexus') {
                 steps {
@@ -103,12 +103,7 @@ pipeline {
                 steps {
                        echo 'Deploying on K8s !!'
                        sh """envsubst < k8s/secrets.yaml|kubectl apply -f -""" 
-                       sh """cd frontend && envsubst < values.yaml && helm template test frontned &&  helm install frontend frontend"""
-                       sh 'kubectl apply -f k8s/mysql-storage.yaml || true'
-                       sh """envsubst < k8s/configmap.yaml|kubectl apply -f -""" 
-                       sh """envsubst < k8s/frontend-deploy.yaml|kubectl apply -f -""" 
-                       sh """envsubst < k8s/db-deploy.yaml|kubectl apply -f - """
-                       sh """envsubst < k8s/backend-deploy.yaml|kubectl apply -f - """
+                       //sh """cd frontend && envsubst < values.yaml && helm template test frontned &&  helm install frontend frontend"""
                        sh "docker logout nexus.zymrinc.com:8083"
 
                 }
