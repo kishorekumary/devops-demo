@@ -65,7 +65,7 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 env:
-  - name: MYSQL_DATABASE
+   - name: MYSQL_DATABASE
      valueFrom:        
        configMapKeyRef:
          name: config-envs
@@ -91,7 +91,7 @@ env:
       secretKeyRef:
         name: mysql-secret
         key: password
-autscaling:
+autoscaling:
   enabled: false
   minReplicas: 1
   maxReplicas: 100
