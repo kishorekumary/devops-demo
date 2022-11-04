@@ -101,10 +101,10 @@ pipeline {
            
             stage('K8s deployment ') {
                 steps {
-                       echo 'Deploying on K8s !!'
+                       echo 'Deploying on K8s !!' 
                        sh """envsubst < k8s/configmap.yaml|kubectl apply -f -""" 
                        sh """envsubst < k8s/secrets.yaml|kubectl apply -f -""" 
-                       //sh """cd frontend && envsubst < values.yaml && helm template test frontned &&  helm install frontend frontend"""
+                       sh """cd k8s/helm && helm install release-frontend frontend ||helm upgrade release-frontend frontend"""
                        sh "docker logout nexus.zymrinc.com:8083"
 
                 }
