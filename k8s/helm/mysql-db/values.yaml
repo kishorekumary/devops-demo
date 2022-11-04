@@ -24,7 +24,9 @@ serviceAccount:
   name: ""
 
 podAnnotations: {}
-
+volumes:
+  name: mysql-persistent-storage
+  claimName: proj4-mysql-pvc
 podSecurityContext: {}
   # fsGroup: 2000
 
