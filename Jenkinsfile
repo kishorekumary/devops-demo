@@ -104,7 +104,7 @@ pipeline {
                        echo 'Deploying on K8s !!' 
                        sh """envsubst < k8s/configmap.yaml|kubectl apply -f -""" 
                        sh """envsubst < k8s/secrets.yaml|kubectl apply -f -""" 
-                       sh """cd k8s/helm && envsubst < frontend/values.yaml | helm install release-frontend frontend -f || envsubst < frontend/values.yaml | helm upgrade release-frontend frontend -f """
+                       sh """cd k8s/helm && envsubst < frontend/values.yaml | helm install release-frontend frontend -f -|| envsubst < frontend/values.yaml | helm upgrade release-frontend frontend -f -"""
                        sh "docker logout nexus.zymrinc.com:8083"
 
                 }
