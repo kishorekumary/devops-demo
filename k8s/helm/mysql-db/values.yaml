@@ -1,0 +1,46 @@
+replicaCount: 1
+image:
+  repository: nexus.zymrinc.com:8083/devops-proj-4/mysql-db:${RELEASE_TAG}
+  pullPolicy: Always
+imagePullSecrets: 
+  - name: nexus-creds
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: false
+  # Annotations to add to the service account
+volumes:
+  name: mysql-persistent-storage
+  claimName: proj4-mysql-pvc
+env:
+          - name: MYSQL_DATABASE
+            valueFrom:        
+               configMapKeyRef:
+                 name: config-envs
+                 key: MYSQL_DATABASE
+          - name: MYSQL_ROOT_USER
+            valueFrom:        
+              configMapKeyRef:
+                name: config-envs
+                key: MYSQL_ROOT_USER 
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom: 
+              secretKeyRef: 
+                name: mysql-secret 
+                key: password
+service:
+  type: ClusterIP
+  port: 3306
+
+ingress:
+  enabled: false
+  className: ""
+ 
+resources: {}
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
