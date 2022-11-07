@@ -1,6 +1,6 @@
 replicaCount: 1
 image:
-  repository:nexus.zymrinc.com:8083/devops-proj-4/mysql-db:${RELEASE_TAG}
+  repository: nexus.zymrinc.com:8083/devops-proj-4/mysql-db:${RELEASE_TAG}
   pullPolicy: Always
 imagePullSecrets: 
   - name: nexus-creds
