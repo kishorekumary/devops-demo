@@ -104,9 +104,9 @@ pipeline {
                        echo 'Deploying on K8s !!' 
                        sh """envsubst < k8s/configmap.yaml|kubectl apply -f -""" 
                        sh """envsubst < k8s/secrets.yaml|kubectl apply -f -""" 
-                       sh """cd k8s/helm && envsubst < frontend/values.yaml | helm install release-frontend frontend -f -|| envsubst < frontend/values.yaml | helm upgrade release-frontend frontend -f -"""
-                       sh """cd k8s/helm && envsubst < backend/values.yaml | helm install release-backend backend -f -|| envsubst < backend/values.yaml | helm upgrade release-backend backend -f -"""
-                       sh """cd k8s/helm && envsubst < mysql-db/values.yaml | helm install release-mysql-db mysql-db -f -|| envsubst < mysql-db/values.yaml | helm upgrade release-mysql-db mysql-db -f -"""
+                       sh """cd k8s/helm && envsubst < frontend/values.yaml | helm upgrade --install release-frontend frontend -f -"""
+                       sh """cd k8s/helm && envsubst < backend/values.yaml  | helm upgrade --install release-backend backend -f -"""
+                       sh """cd k8s/helm && envsubst < mysql-db/values.yaml | helm upgrade --install release-mysql-db mysql-db -f -"""
                        sh "docker logout nexus.zymrinc.com:8083"
 
                 }
