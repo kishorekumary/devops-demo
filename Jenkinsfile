@@ -112,11 +112,11 @@ pipeline {
 
                 }
             }
-        
+        */
         }
 
 
-    post{
+    /*post{
         success {
             slackSend( channel: "#devops-projects", token: "Slack-Token", color: "good", message: "Project-4 at ${BUILD_URL} has deployed the latest onto the prod!")
         }
