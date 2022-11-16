@@ -27,7 +27,7 @@ pipeline {
                 }
             }
             
-            stage('Pre Build: Prod') {
+            /*stage('Pre Build: Prod') {
                 steps {
                        sh 'rm frontend/.env || true'
                        sh 'touch frontend/.env'
@@ -123,6 +123,6 @@ pipeline {
         failure {
             slackSend( channel: "#devops-projects", token: "Slack-Token", color: "good", message: "Project-4 at ${BUILD_URL} has result fail ")
         }
-    }
+    }*/
 
 }
