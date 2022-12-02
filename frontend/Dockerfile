@@ -35,8 +35,8 @@ RUN chown -R nginx:nginx /usr/share/nginx/html  && chmod -R 755 /usr/share/nginx
         chown -R nginx:nginx /etc/nginx/conf.d
 RUN touch /var/run/nginx.pid && \
         chown -R nginx:nginx /var/run/nginx.pid
-#set user to nginx
-USER nginx
+# #set user to nginx
+# USER nginx
 #To run in foreground debug mode
 CMD ["nginx", "-g", "daemon off;"]
 
