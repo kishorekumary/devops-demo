@@ -40,27 +40,7 @@ pipeline {
                 }
             }
            
-            stage('Sonarqube Scanning') {
-                
-                steps {
-                    echo "Send for Sonarqube analysis !!"
-                }
-            }
-
-            stage('Email-Notify') {
-                
-                steps {
-                    script {
-                        def mailRecipients = 'kishore.kumar@zymr.com'
-                        def jobName = currentBuild.fullDisplayName
-                        emailext body: '''Please Approve the Deployment By visiting ${BUILD_URL}''',
-                        mimeTye: 'text/html',
-                        subject: "[Jenkins- ${jobName}] Approve the Deployment On Production ",
-                        to: "${mailRecipients}",
-                        replyTo: "${mailRecipients}"
-                    }
-                }
-            }
+          
 
             stage('Waiting for Approval') {
                 steps {
