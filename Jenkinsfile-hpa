@@ -42,11 +42,7 @@ pipeline {
            
           
 
-            stage('Waiting for Approval') {
-                steps {
-                    input("Do you wish to Approve the prod deployment ?")
-                }
-            }
+            
            
             stage('Publish To Nexus') {
                 steps {
